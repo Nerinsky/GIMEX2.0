@@ -1,0 +1,26 @@
+{
+  "name": "gimex2.0",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon --watch backend --exec node --experimental-modules backend/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nerinsky/GIMEX2.0.git"
+  },
+  "author": "Daniel Neri <neri685@gamil.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Nerinsky/GIMEX2.0/issues"
+  },
+  "homepage": "https://github.com/Nerinsky/GIMEX2.0#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
