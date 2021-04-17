@@ -1,30 +1,40 @@
 import React from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { BrowserRouter, Link, Route } from 'react-router-dom';
+import CartSecreen from './screens/CartScreen';
 import HomeScreen from './screens/HomeScreen';
 import ProductScreen from './screens/ProductScreen';
 
-function App() {
-return (
-  <BrowserRouter>
-    <div className="grid-container">
-      <header className="row">
-        <div>
-          <a className="brand" href="/">
-            GIMEX
-          </a>
-        </div>
-        <div>
-          <a href="/cart">Carrito</a>
-          <a href="/signin">Registrase</a>
-        </div>
-      </header>
-      <main>
-        <Route path="/product/:id" component={ProductScreen}></Route>
-        <Route path="/" component={HomeScreen} exact></Route>
-      </main>
-      <footer className="row center">ITGAM-GIMEX-NERI All right reserved</footer>
-    </div>
-  </BrowserRouter>
+function App() 
+{
+  const cart = useSelector(state => state.cart);
+  const {cartItems} = cart;
+  return(
+    <BrowserRouter>
+      <div className="grid-container">
+        <header className="row">
+          <div>
+            <Link className="brand" to="/">
+              GIMEX
+            </Link>
+          </div>
+          <div>
+            <Link to="/cart">Carrito
+              {cartItems.length > 0 && (
+                <span className="badge">{cartItems.length}</span>
+              )}
+            </Link>
+            <Link to="/signin">Registrase</Link>
+          </div>
+        </header>
+        <main>
+          <Route path="/cart/:id?" component={CartSecreen}></Route>
+          <Route path="/product/:id" component={ProductScreen}></Route>
+          <Route path="/" component={HomeScreen} exact></Route>
+        </main>
+        <footer className="row center">ITGAM-GIMEX-NERI All right reserved</footer>
+      </div>
+    </BrowserRouter>
   );
 }
 
