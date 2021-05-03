@@ -151,7 +151,10 @@ a.brand
 {
   flex: 2 1 50rem;
 }
-
+.min-30
+{
+  min-width: 30rem;
+}
 /* Image */
 img 
 {
@@ -165,6 +168,11 @@ img.medium
 img.large 
 {
   width: 80%;
+}
+img.small
+{
+  max-width: 5rem;
+  width: 100%;
 }
 
 /* Card */
