@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { addToCart } from "../actions/cartActions";
+import { addToCart, removeFromCart } from "../actions/cartActions";
 import MessageBox from "../components/MessageBox";
 
 export default function CartScreen(props)
@@ -21,6 +21,7 @@ export default function CartScreen(props)
     const removeFromCartHandler = (id) =>
     {
         //Accion Borrar
+        dispatch(removeFromCart(id));
     };
     const checkoutHandler = () =>
     {
@@ -34,7 +35,7 @@ export default function CartScreen(props)
                 {
                     cartItems.length === 0?
                         <MessageBox>
-                        Carrito esta vacio. <Link to="/"> Ir de Compras</Link>
+                        Carrito vacio. <Link to="/"> Ir de Compras</Link>
                         </MessageBox>
                         :
                         (
@@ -79,12 +80,12 @@ export default function CartScreen(props)
                     <ul>
                         <li>
                             <h2>
-                                Subtotal ({cartItems.reduce((a, c) => a + c.can, 0)} items) : ${cartItems.reduce((a, c) => a + c.price * c.can, 0)}
+                                Subtotal ({cartItems.reduce((a, c) => a + c.can, 0)} productos) : ${cartItems.reduce((a, c) => a + c.price * c.can, 0)}
                             </h2>
                         </li>
                         <li>
                             <button type="button" onClick={checkoutHandler} className="primary block" disabled={cartItems.length === 0}>
-                                Proceder a Pagar
+                                Ir a Pagar
                             </button>
                         </li>
                     </ul>
