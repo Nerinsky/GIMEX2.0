@@ -19,7 +19,6 @@ const data =
     products: 
     [
         {
-            _id: '1',
             name: 'Compu 1',
             category: 'Computacion',
             image: '/images/pro1.jpg',
@@ -31,7 +30,6 @@ const data =
             description: 'high quality product',
         },
         {
-            _id: '2',
             name: 'Compu 2',
             category: 'Computacion',
             image: '/images/pro1.jpg',
@@ -43,7 +41,6 @@ const data =
             description: 'high quality product',
         },
         {
-            _id: '3',
             name: 'Compu 3',
             category: 'Computacion',
             image: '/images/pro1.jpg',
@@ -55,7 +52,6 @@ const data =
             description: 'high quality product',
         },
         {
-            _id: '4',
             name: 'Compu 4',
             category: 'Computacion',
             image: '/images/pro1.jpg',
@@ -67,7 +63,6 @@ const data =
             description: 'high quality product',
         },
         {
-            _id: '5',
             name: 'Compu 5',
             category: 'Computacion',
             image: '/images/pro1.jpg',
@@ -79,7 +74,6 @@ const data =
             description: 'high quality product',
         },
         {
-            _id: '6',
             name: 'Compu 6',
             category: 'Computacion',
             image: '/images/pro1.jpg',
