@@ -5,6 +5,7 @@ import { signout } from './actions/userActions';
 import CartSecreen from './screens/CartScreen';
 import HomeScreen from './screens/HomeScreen';
 import ProductScreen from './screens/ProductScreen';
+import RegisterScreen from './screens/RegisterScreen';
 import SigninScreen from './screens/SigninScreen';
 
 function App() 
@@ -55,6 +56,7 @@ function App()
           <Route path="/cart/:id?" component={CartSecreen}></Route>
           <Route path="/product/:id" component={ProductScreen}></Route>
           <Route path="/signin" component={SigninScreen}></Route>
+          <Route path="/register" component={RegisterScreen}></Route>
           <Route path="/" component={HomeScreen} exact></Route>
         </main>
         <footer className="row center">ITGAM-GIMEX-NERI All right reserved</footer>
