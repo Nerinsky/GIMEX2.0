@@ -39,11 +39,11 @@ export default function SigninScreen(props)
                 }
                 <div>
                     <label htmlFor="email">Correo Electronico</label>
-                    <input type="email" id="email" placeholder="Enter email" required onChange={ e => setEmail(e.target.value) }></input>
+                    <input type="email" id="email" placeholder="Ingrese Correo Electronico" required onChange={ e => setEmail(e.target.value) }></input>
                 </div>
                 <div>
                     <label htmlFor="password">Contraseña</label>
-                    <input type="password" id="password" placeholder="Enter password" required onChange={ e => setPassword(e.target.value) }></input>
+                    <input type="password" id="password" placeholder="Ingrese Contraseña" required onChange={ e => setPassword(e.target.value) }></input>
                 </div>
                 <div>
                     <label />
