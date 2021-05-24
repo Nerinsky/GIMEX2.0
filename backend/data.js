@@ -21,7 +21,7 @@ const data =
         {
             name: 'Compu 1',
             category: 'Computacion',
-            image: '/images/pro1.jpg',
+            image: '/images/Pluma.jpg',
             price: 120,
             countInStock: 75,
             brand: 'HP',

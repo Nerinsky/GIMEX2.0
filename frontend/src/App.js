@@ -2,12 +2,15 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Link, Route } from 'react-router-dom';
 import { signout } from './actions/userActions';
+import PrivateRoute from './components/PrivateRoute';
 import CartSecreen from './screens/CartScreen';
 import HomeScreen from './screens/HomeScreen';
+import OrderHistoryScreen from './screens/OrderHistoryScreen';
 import OrderScreen from './screens/OrderScreen';
 import PaymentMethodScreen from './screens/PaymentMethodScreen';
 import PlaceOrderScreen from './screens/PlaceOrderScreen';
 import ProductScreen from './screens/ProductScreen';
+import ProfileScreen from './screens/ProfileScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import ShippingAddressScreen from './screens/ShippingAddressScreen';
 import SigninScreen from './screens/SigninScreen';
@@ -45,6 +48,12 @@ function App()
                 <Link to="#">{userInfo.name} <i className="fa fa-caret-down"></i>{' '} </Link>
                 <ul className="dropdown-content">
                   <li>
+                    <Link to="/profile">Perfil del Usuario </Link>
+                  </li>
+                  <li>
+                    <Link to="/orderhistory">Historial de Pedidos</Link>
+                  </li>
+                  <li>
                     <Link to="#signout" onClick={ signoutHandler }>Salir</Link>
                   </li>
                 </ul>
@@ -65,6 +74,8 @@ function App()
           <Route path="/payment" component={PaymentMethodScreen}></Route>
           <Route path="/placeorder" component={PlaceOrderScreen}></Route>
           <Route path="/order/:id" component={OrderScreen}></Route>
+          <Route path="/orderhistory" component={OrderHistoryScreen}></Route>
+          <PrivateRoute path="/profile/" component={ProfileScreen}></PrivateRoute>
           <Route path="/" component={HomeScreen} exact></Route> 
         </main>
         <footer className="row center">ITGAM-GIMEX-NERI All right reserved</footer>
