@@ -51,7 +51,7 @@ export default function ProfileScreen()
         <div>
             <form className="form" onSubmit={submitHandler}>
                 <div>
-                    <h1>Perfil del Usuario</h1>
+                    <h1>Actualizar Datos</h1>
                 </div>
                 {loading ? (
                     <LoadingBox></LoadingBox>
@@ -88,7 +88,7 @@ export default function ProfileScreen()
                             <input
                                 id="password"
                                 type="password"
-                                placeholder="Ingrese Contraseña"
+                                placeholder="Ingrese Nueva Contraseña"
                                 onChange={e => setPassword(e.target.value)}
                             ></input>
                         </div>
@@ -97,7 +97,7 @@ export default function ProfileScreen()
                             <input
                                 id="confirmPassword"
                                 type="password"
-                                placeholder="Confirme Contraseña"
+                                placeholder="Confirme Nueva Contraseña"
                                 onChange={e => setConfirmPassword(e.target.value)}
                             ></input>
                         </div>
