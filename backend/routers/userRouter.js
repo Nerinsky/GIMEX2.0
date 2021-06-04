@@ -3,7 +3,7 @@ import expressAsyncHandler from 'express-async-handler';
 import bcrypt from 'bcryptjs';
 import data from '../data.js';
 import User from '../models/userModel.js';
-import { generateToken, isAuth } from '../utils.js';
+import { generateToken, isAuth, isAdmin } from '../utils.js';
 
 const userRouter = express.Router();
 
@@ -91,4 +91,50 @@ userRouter.put('/profile', isAuth, expressAsyncHandler(async (req,res) =>
     })
 );
 
+userRouter.get('/', isAuth, isAdmin, expressAsyncHandler(async (req, res) =>
+    {
+        const users = await User.find({});
+        res.send(users);
+    })
+);
+
+userRouter.delete('/:id', isAuth, isAdmin, expressAsyncHandler(async (req,res) =>
+    {
+        const user = await User.findById(req.params.id);
+        if(user)
+        {
+            if(user.email === 'neri@msn.com')
+            {
+                res.status(400).send({ message: 'Prohibido Eliminar Usuario Administrador' });
+                return;
+            }
+            const deleteUser = await user.remove();
+            res.send({ message: 'Usuario Eliminado', user: deleteUser });
+        }
+        else
+        {
+            res.status(404).send({ message: 'Usuario No Encontrado' });
+        }
+    })
+);
+
+userRouter.put('/:id', isAuth, isAdmin, expressAsyncHandler(async (req,res) => 
+        {
+            const user = await User.findById(req.params.id);
+            if(user)
+            {
+                user.name = req.body.name || user.name;
+                user.email = req.body.email || user.email;
+                user.isSeller = Boolean(req.body.isSeller);
+                user.isAdmin = Boolean(req.body.isAdmin);
+                const updatedUser = await user.save();
+                res.send({ message: 'Usuario Actualizado', user: updatedUser });
+            }
+            else
+            {
+                res.status(404).send({ message: 'Usuario No Encontrado'});
+            }
+        }
+    )
+)
 export default userRouter;
