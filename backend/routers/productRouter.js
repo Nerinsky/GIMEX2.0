@@ -2,13 +2,16 @@ import express from 'express';
 import expressAsyncHandler from 'express-async-handler';
 import data from '../data.js'
 import Product from '../models/productModel.js';
-import { isAdmin, isAuth } from '../utils.js';
+import { isAdmin, isAuth, isSellerOrAdmin } from '../utils.js';
 
 const productRouter = express.Router();
 
 productRouter.get('/', expressAsyncHandler(async (req, res) =>
 {
-    const products = await Product.find({});
+    const seller = req.query.seller || '';
+    const sellerFilter = seller ? { seller } : {};
+
+    const products = await Product.find({...sellerFilter});
     res.send(products);
 })
 );
@@ -35,20 +38,21 @@ productRouter.get('/:id', expressAsyncHandler(async (req, res) =>
 })
 );
 
-productRouter.post('/', isAuth, isAdmin, expressAsyncHandler(async (req,res) => 
+productRouter.post('/', isAuth, isSellerOrAdmin, expressAsyncHandler(async (req,res) => 
     {
         const product = new Product
         (
             {
-                name:'Duvalin' + Date.now(),
+                name:'Ingrese Producto' + Date.now(),
+                seller: req.user._id,
                 image: '/images/pro1.jpg',
-                price: 20,
-                category: 'Dulce',
-                brand: 'De la Rosa',
-                countInStock: 2,
+                price: 0,
+                category: 'Ingrese Categoría',
+                brand: 'Ingrese Marca',
+                countInStock: 0,
                 rating: 0,
                 numReviews: 0,
-                description: 'sample description'
+                description: 'Ingrese Descripción'
             }
         );
         const createdProduct = await product.save();
@@ -56,7 +60,7 @@ productRouter.post('/', isAuth, isAdmin, expressAsyncHandler(async (req,res) =>
     })
 );
 
-productRouter.put('/:id', isAuth, isAdmin, expressAsyncHandler(async (req, res) =>
+productRouter.put('/:id', isAuth, isSellerOrAdmin, expressAsyncHandler(async (req, res) =>
     {
         const productId = req.params.id;
         const product = await Product.findById(productId);
