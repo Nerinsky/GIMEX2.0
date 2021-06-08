@@ -82,7 +82,7 @@ export default function UserEditScreen(props)
                                 <input id="isAdmin" type="checkbox" checked={isAdmin} onChange={e => setIsAdmin(e.target.checked)}></input>
                             </div>
                             <div>
-                                <button type="submit" className="primary">Actualizar</button>
+                                <button type="submit" className="primary" >Actualizar</button>
                             </div>
                         </>
                     )

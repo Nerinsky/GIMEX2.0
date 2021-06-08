@@ -49,7 +49,7 @@ export const userDetailsReducer = (state = { loading: true }, action) =>
     }
 };
 
-export const userUpdateProfileReducer = (state = { loading: true }, action) =>
+export const userUpdateProfileReducer = (state = {}, action) =>
 {
     switch(action.type)
     {
@@ -92,7 +92,7 @@ export const userListReducer = (state = { loading: true }, action) =>
         case USER_LIST_SUCCESS:
             return { loading: false, users: action.payload };
         case USER_LIST_FAIL:
-            return { loading:false, error: action.payload };
+            return { loading: false, error: action.payload };
         default:
             return state;
     }

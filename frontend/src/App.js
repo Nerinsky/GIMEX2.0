@@ -4,6 +4,7 @@ import { BrowserRouter, Link, Route } from 'react-router-dom';
 import { signout } from './actions/userActions';
 import AdminRoute from './components/AdminRoute';
 import PrivateRoute from './components/PrivateRoute';
+import SearchBox from './components/SearchBox';
 import SellerRoute from './components/SellerRoute';
 import CartSecreen from './screens/CartScreen';
 import HomeScreen from './screens/HomeScreen';
@@ -17,6 +18,7 @@ import ProductListScreen from './screens/ProductListScreen';
 import ProductScreen from './screens/ProductScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import RegisterScreen from './screens/RegisterScreen';
+import SearchScreen from './screens/SearchScreen';
 import ShippingAddressScreen from './screens/ShippingAddressScreen';
 import SigninScreen from './screens/SigninScreen';
 import UserEditScreen from './screens/UserEditScreen';
@@ -41,6 +43,14 @@ function App()
             <Link className="brand" to="/">
               GIMEX
             </Link>
+          </div>
+          <div>
+            <Route render={({ history }) =>
+              (
+                <SearchBox history={history}></SearchBox>
+              )
+            }
+            ></Route>
           </div>
           <div>
             <Link to="/cart">Carrito
@@ -94,9 +104,6 @@ function App()
                   </Link>
                   <ul className="dropdown-content">
                     <li>
-                      <Link to="/dashboard">Tablero</Link>
-                    </li>
-                    <li>
                       <Link to="/productlist">Productos</Link>
                     </li>
                     <li>
@@ -122,7 +129,8 @@ function App()
           <Route path="/placeorder" component={PlaceOrderScreen}></Route>
           <Route path="/order/:id" component={OrderScreen}></Route>
           <Route path="/orderhistory" component={OrderHistoryScreen}></Route>
-          <PrivateRoute path="/profile/" component={ProfileScreen}></PrivateRoute>
+          <Route path="/search/name/:name?" component={SearchScreen}></Route>
+          <PrivateRoute path="/profile" component={ProfileScreen}></PrivateRoute>
           <AdminRoute path="/productlist" component={ProductListScreen} exact></AdminRoute>
           <AdminRoute path="/orderlist" component={OrderListScreen} exact></AdminRoute>
           <AdminRoute path="/userlist" component={UserListScreen}></AdminRoute>

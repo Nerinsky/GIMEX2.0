@@ -17,7 +17,7 @@ export default function UserListScreen(props)
     useEffect(() => 
         {
             dispatch(listUsers());
-            dispatch({ type: USER_DETAILS_RESET })
+            dispatch({ type: USER_DETAILS_RESET, });
         }, [dispatch, successDelete]
     );
     const deleteHandler = user =>
@@ -39,7 +39,7 @@ export default function UserListScreen(props)
                     <LoadingBox></LoadingBox>
                 ) : error ?
                 (
-                    <MessageBox variant="danger"></MessageBox>
+                    <MessageBox variant="danger">{error}</MessageBox>
                 ) :
                 (
                     <table className="table">
