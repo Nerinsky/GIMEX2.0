@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
-import { detailsProduct } from "../actions/productActions";
+import { createReview, detailsProduct } from "../actions/productActions";
+import { PRODUCT_REVIEW_CREATE_RESET } from "../constants/productConstants";
 
 export default function ProductScreen(props) 
 {
@@ -13,22 +14,54 @@ export default function ProductScreen(props)
     const [can, setCantidad] = useState(1);
     const productDetails = useSelector((state) => state.productDetails);
     const { loading, error, product} = productDetails;
+    const userSignin = useSelector(state => state.userSignin);
+    const { userInfo } = userSignin;
+
+    const productReviewCreate = useSelector(state => state.productReviewCreate);
+    const
+    {
+        loading: loadingReviewCreate,
+        error: errorReviewCreate,
+        success: successReviewCreate,
+    } = productReviewCreate;
+
+    const [rating, setRating] = useState(0);
+    const [comment, setComment] = useState('');
 
     useEffect(() =>
     {
+        if(successReviewCreate)
+        {
+            window.alert('Reseña Enviada Exitosamente');
+            setRating('');
+            setComment('');
+            dispatch({ type: PRODUCT_REVIEW_CREATE_RESET });
+        }
         dispatch(detailsProduct(productId));
-    }, [dispatch, productId]);
+    }, [dispatch, productId, successReviewCreate]);
     const addToCartHandler = () =>
     {
         props.history.push(`/cart/${productId}?can=${can}`);
     };
+    const submitHandler = e => 
+    {
+        e.preventDefault();
+        if(comment && rating)
+        {
+            dispatch(createReview(productId, { rating, comment, name: userInfo.name }));
+        }
+        else
+        {
+            alert('Ingrese Comentario y Calificación');
+        }
+    }
     return (
         <div>
             {loading? (<LoadingBox></LoadingBox>)
             :
             error? (<MessageBox variant="danger">{error}</MessageBox>)
             :(
-<div>
+            <div>
             <Link to="/">Regresar Inicio</Link>
             <div className="row top">
                 <div className="col-2">
@@ -105,11 +138,76 @@ export default function ProductScreen(props)
                     </div>
                 </div>
             </div>
+            <div>
+                <h2 id="reviews">Reseñas</h2>
+                {
+                    product.reviews.length === 0 &&
+                    (
+                        <MessageBox>No hay Reseñas</MessageBox>
+                    )
+                }
+                <ul>
+                    {
+                        product.reviews.map(review =>
+                                (
+                                    <li key={review._id}>
+                                        <strong>{ review.name }</strong>
+                                        <Rating rating={ review.rating } caption=" "></Rating>
+                                        <p>{ review.createdAt.substring(0, 10) }</p>
+                                        <p>{ review.comment }</p>
+                                    </li>
+                                )
+                            )
+                    }
+                    <li>
+                        {
+                            userInfo ?
+                            (
+                                <form className="form" onSubmit= { submitHandler }>
+                                    <div>
+                                        <h2>Escribe una Reseña</h2>
+                                    </div>
+                                    <div>
+                                        <label htmlFor="rating">Calificación</label>
+                                        <select id="rating" value={ rating } onChange={ e => setRating(e.target.value) }>
+                                            <option value="1">1- Muy Mala</option>
+                                            <option value="2">2- Mala</option>
+                                            <option value="3">3- Regular</option>
+                                            <option value="4">4- Buena</option>
+                                            <option value="5">5- Excelente</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label htmlFor="comment">Comentario</label>
+                                        <textarea id="comment" value={ comment } onChange={ e => setComment(e.target.value) }></textarea>
+                                    </div>
+                                    <div>
+                                        <label />
+                                        <button className="primary" type="submit">Enviar</button>
+                                    </div>
+                                    <div>
+                                        {
+                                            loadingReviewCreate && <LoadingBox></LoadingBox>
+                                        }
+                                        {
+                                            errorReviewCreate && 
+                                            (
+                                                <MessageBox variant="danger">{errorReviewCreate}</MessageBox>
+                                            )
+                                        }
+                                    </div>
+                                </form>
+                            ) :
+                            (
+                                <MessageBox>Necesita <Link to="/signin">Acceder</Link> para escribir una reseña</MessageBox>
+                            )
+                        }
+                    </li>
+                </ul>
+            </div>
         </div>
             )}
         </div>
-
-
         
     );
 }
