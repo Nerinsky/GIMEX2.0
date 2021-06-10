@@ -1,7 +1,7 @@
 import express from 'express';
 import expressAsyncHandler from 'express-async-handler';
 import Order from '../models/orderModel.js';
-import { isAdmin, isAuth, isSellerOrAdmin } from '../utils.js';
+import { isAdmin, isAuth, isSellerOrAdmin, mailgun, payOrderEmailTemplate } from '../utils.js';
 
 const orderRouter = express.Router();
 
@@ -65,14 +65,33 @@ orderRouter.get('/:id', isAuth, expressAsyncHandler(async (req, res) =>
 
 orderRouter.put('/id:/pay', isAuth, expressAsyncHandler(async (req, res) => 
     {
-        const order = await Order.findById(req.params.id);
+        const order = await Order.findById(req.params.id).populate('user', 'email name');
         if(order)
         {
             order.isPaid = true;
-            order.paisAt = Date.now();
+            order.paidAt = Date.now();
             order.paymentResult = { id: req.body.id, status: req.body.status, update_time: req.body.update_time, email_addres: req.body.email_addres};
-            const updateOrder = await order.save();
-            res.send({ message: 'Pedido Pagado', order: updateOrder });
+            const updatedOrder = await order.save();
+            mailgun().messages().send(
+                {
+                    from: 'GINEIT <neri@msn.com>',
+                    to: `${order.user.name} <${order.user.email}>`,
+                    subject: `Nuevo Pedido ${order._id}`,
+                    html: payOrderEmailTemplate(order),
+                },
+                (error, body) =>
+                {
+                    if(error)
+                    {
+                        console.log(error);
+                    }
+                    else
+                    {
+                        console.log(body);
+                    }
+                }
+            );
+            res.send({ message: 'Pedido Pagado', order: updatedOrder });
         }
         else
         {

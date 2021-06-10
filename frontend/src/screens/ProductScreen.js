@@ -62,7 +62,6 @@ export default function ProductScreen(props)
             error? (<MessageBox variant="danger">{error}</MessageBox>)
             :(
             <div>
-            <Link to="/">Regresar Inicio</Link>
             <div className="row top">
                 <div className="col-2">
                     <img className="large" src={product.image} alt={product.name}></img>

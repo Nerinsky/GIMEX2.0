@@ -71,7 +71,7 @@ export default function Rating(props)
                     <span>{caption}</span>
                 ) :
                 (
-                    <span>{numReviews + 'reviews'}</span>
+                    <span>{numReviews +' Reseñas'}</span>
                 )
             }
             

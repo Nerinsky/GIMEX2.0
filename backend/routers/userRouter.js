@@ -112,7 +112,7 @@ userRouter.delete('/:id', isAuth, isAdmin, expressAsyncHandler(async (req,res) =
         const user = await User.findById(req.params.id);
         if(user)
         {
-            if(user.email === 'neri@msn.com')
+            if(user.email === 'neriitgam.tics@gmail.com')
             {
                 res.status(400).send({ message: 'Prohibido Eliminar Usuario Administrador' });
                 return;

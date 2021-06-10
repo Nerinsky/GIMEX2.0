@@ -142,7 +142,7 @@ function App()
         <aside className={sidebarIsOpen ? 'open' : ''}>
           <ul className="categories">
             <li>
-              <strong>Ctegorias</strong>
+              <strong>Categorias</strong>
               <button onClick={() => setSidebarIsOpen(false)} className="close-sidebar" type="button">
                 <i className="fa fa-close"></i>
               </button>
