@@ -95,7 +95,7 @@ orderRouter.put('/id:/pay', isAuth, expressAsyncHandler(async (req, res) =>
         }
         else
         {
-            res.status(404).send({ message: 'Order No Encontrada' });
+            res.status(404).send({ message: 'Pedido No Encontrado' });
         }
     })
 );
@@ -128,7 +128,7 @@ orderRouter.put('/:id/deliver', isAuth, isAdmin, expressAsyncHandler(async (req,
         }
         else
         {
-            res.status(404).send({ message: 'Pedido no Enocntrado' })
+            res.status(404).send({ message: 'Pedido no Encontrado' })
         }
     })
 );
